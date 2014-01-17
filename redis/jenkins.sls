@@ -17,6 +17,7 @@ redis_jenkins:
   user.present:
     - name: jenkins
 
+{% if salt['pillar.get']('pubkeys:jenkins_slave_root', False) %}
 {{ salt['pillar.get']('pubkeys:jenkins_slave_root:key') }}:
   ssh_auth:
     - present
@@ -25,3 +26,4 @@ redis_jenkins:
     - comment: {{ salt['pillar.get']('pubkeys:jenkins_slave_root:comment') }}
     - require:
       - user: jenkins
+{% endif %}
